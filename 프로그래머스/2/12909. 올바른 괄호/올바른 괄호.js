@@ -1,21 +1,12 @@
-function solution(s){
-    const sArr = s.split('')
-
-  if (sArr.length % 2 === 1) {
-    return false
-  }
-
-  if (sArr[0] === ')' || sArr[sArr.length - 1] === '(') {
-    return false;
-  }
-
-  let stackCnt = 0;
-
-  for (let i = 0; i < sArr.length; i++) {
-    stackCnt += sArr[i] === '(' ? 1 : -1;
-
-    if (stackCnt < 0) { return false}
-  }
-
-  return stackCnt === 0 ? true : false;
+function solution(s) {
+    const stack = [];
+    for (const ch of s) {
+        if (ch === '(') {
+            stack.push(ch);
+        } else { // ch === ')'
+            if (stack.length === 0) return false; // 스택이 비어있는데 닫는 괄호? → 잘못된 경우
+            stack.pop(); // 정상적으로 매칭되는 '(' 하나 제거
+        }
+    }
+    return stack.length === 0;
 }
