@@ -17,4 +17,3 @@ function solution(participant, completion) {
 
     return [...hash.keys()][0];
 }
-
