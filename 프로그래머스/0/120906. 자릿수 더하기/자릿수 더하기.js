@@ -1,5 +1,4 @@
 function solution(n) {
-    var answer = 0;
-    n.toString().split('').forEach((it) => answer += Number(it))
-    return answer;
+
+    return String(n).split('').map(Number).reduce((acc, cur) => acc + cur, 0);
 }
