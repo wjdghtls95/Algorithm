@@ -1,9 +1,13 @@
 function solution(s) {
-     var answer = '';
-   let result = s.split(' ');
+    const words = s.toLowerCase().split(' ');
+    const answer = [];
 
-   let result2 = result.map(x=> x.charAt(0).toUpperCase() + x.slice(1).toLowerCase());
-
-   answer = result2.join(" ")
-    return answer;
+    for (const w of words) {
+        const chars = w.split('');
+        if (chars[0]) {
+            chars[0] = chars[0].toUpperCase();
+        }
+        answer.push(chars.join(''));
+    }
+    return answer.join(' ');
 }
