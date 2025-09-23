@@ -1,17 +1,11 @@
 function solution(s) {
-    const str = s.split('');
+    const last = new Map();   // Map<char, index>
+    const ans = new Array(s.length);
 
-      const answer = [];
-      const checkStr = [];
-
-      for (let i = 0; i < str.length; i++) {
-        if (!checkStr.includes(str[i])) {
-          answer.push(-1);
-          checkStr.push(str[i]);
-        } else {
-          answer.push(i - checkStr.lastIndexOf(s[i]));
-          checkStr.push(str[i]);
-        }
-      }
-      return answer;
+    for (let i = 0; i < s.length; i++) {
+        const ch = s[i];
+        ans[i] = last.has(ch) ? i - last.get(ch) : -1;
+        last.set(ch, i);
+    }
+    return ans;
 }
