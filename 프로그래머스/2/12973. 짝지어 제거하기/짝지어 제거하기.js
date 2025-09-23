@@ -1,13 +1,15 @@
-function solution(s) {
-    let stack = []
+function solution(s)
+{
+    var answer = [];
 
-    for(const c of s) {
-        if(stack.length > 0 && stack[stack.length - 1] === c) {
-            stack.pop()
+    for(const ch of s) {
+        if(answer.length > 0 && answer[answer.length - 1] === ch) {
+            answer.pop()
         } else {
-            stack.push(c)
+            answer.push(ch)
         }
     }
 
-    return stack.length === 0 ? 1 : 0
+
+    return answer.length === 0 ? 1 : 0;
 }
