@@ -1,18 +1,13 @@
 function solution(k, score) {
-    const honor = []
-    const result = []
+    let answer = [];
+    let honor = [];
 
-    for(let i = 0 ; i < score.length ; i ++) {
-        if(i < k) {
-            honor.push(score[i])
-        }
-        if(score[i] > Math.min(...honor)) {
-            honor.pop()
-            honor.push(score[i])
-            honor.sort((a,b) => b-a)
-        }
-        // 결괏값에 명예의 전당 중 최하위 점수 입력
-        result.push(honor.at(-1))
+    for (let s of score) {
+        honor.push(s);                    // 점수 추가
+        honor.sort((a,b) => b-a);         // 내림차순 정렬
+        if (honor.length > k) honor.pop() // k명 유지
+        answer.push(honor[honor.length-1]); // 최하위 점수 기록
     }
-    return result
+
+    return answer;
 }
