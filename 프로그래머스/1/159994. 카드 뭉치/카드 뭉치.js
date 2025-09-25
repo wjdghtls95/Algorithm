@@ -1,14 +1,19 @@
-function solution(cards1, cards2, goals) {
-    for(const goal of goals) {
+function solution(cards1, cards2, goal) {
+    var answer = 0;
 
-        if(cards1[0] == goal) {
-            cards1.shift();
-        } else if(cards2[0] == goal) {
-            cards2.shift();
+    for (let i = 0; i < goal.length; i++) {
+        const word = goal[i]
+
+        if (cards1[0] === word) {
+            cards1.shift()
+            answer ++
+        } else if (cards2[0] === word) {
+            cards2.shift()
+            answer ++
         } else {
             return "No"
         }
     }
 
-    return "Yes";
+    return answer === goal.length ? "Yes" : "No";
 }
