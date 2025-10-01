@@ -1,43 +1,34 @@
 function solution(want, number, discount) {
     let answer = 0;
-    const wantMap = new Map();
-    const windowSize = 10; // 👈 여기가 핵심
 
-    // 1. 내가 원하는 장바구니 세팅
-    for (let i = 0; i < want.length; i++) {
-        wantMap.set(want[i], number[i]);
-    }
+    // 각 10일 구간을 확인
+    for (let startDay = 0; startDay <= discount.length - 10; startDay++) {
+        // 현재 10일간의 할인 상품
+        const currentWindow = discount.slice(startDay, startDay + 10);
 
-    const windowMap = new Map();
+        // 원하는 제품이 모두 있는지 확인
+        let isValid = true;
 
-    // 2. 처음 windowSize일 세팅
-    for (let i = 0; i < windowSize; i++) {
-        const item = discount[i];
-        windowMap.set(item, (windowMap.get(item) || 0) + 1);
-    }
+        for (let i = 0; i < want.length; i++) {
+            const wantedItem = want[i];
+            const neededCount = number[i];
 
-    // 3. 비교 함수
-    const isMatch = () => {
-        for (const [product, count] of wantMap.entries()) {
-            if (windowMap.get(product) !== count) return false;
+            // 현재 구간에서 해당 제품의 개수 세기
+            const actualCount = currentWindow.filter(item => item === wantedItem).length;
+
+            if (actualCount !== neededCount) {
+                isValid = false;
+                break;
+            }
         }
-        return true;
-    };
 
-    if (isMatch()) answer++;
-
-    // 4. 슬라이딩 윈도우 진행
-    for (let i = windowSize; i < discount.length; i++) {
-        const outItem = discount[i - windowSize];
-        const inItem = discount[i];
-
-        windowMap.set(outItem, windowMap.get(outItem) - 1);
-        if (windowMap.get(outItem) === 0) windowMap.delete(outItem);
-
-        windowMap.set(inItem, (windowMap.get(inItem) || 0) + 1);
-
-        if (isMatch()) answer++;
+        if (isValid) {
+            answer++;
+        }
     }
 
     return answer;
 }
+
+console.log(solution(["banana", "apple", "rice", "pork", "pot"], [3, 2, 2, 2, 1], ["chicken", "apple", "apple", "banana", "rice", "apple", "pork", "banana", "pork", "rice", "pot", "banana", "apple", "banana"]))
+console.log(solution(["apple"], [10], ["banana", "banana", "banana", "banana", "banana", "banana", "banana", "banana", "banana", "banana"]))
